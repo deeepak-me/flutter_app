@@ -8,6 +8,8 @@ void main() {
 //material app
 //scaffold
 
+String? title = "Flutter Map";
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -21,32 +23,40 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text("Flutter Map"), centerTitle: true),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              DrawerHeader(child: Text("Header")),
-              ListTile(title: Text("Welcome")),
-            ],
-          ),
-        ),
-        floatingActionButton: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
-            SizedBox(height: 10.0),
-            FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
-          ],
-        ),
-        bottomNavigationBar: NavigationBar(
-          destinations: [
-            NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-            NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
-          ],
-          onDestinationSelected: (int value) {},
-          selectedIndex: 1,
-        ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  //here
+  int currentIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title!), centerTitle: true),
+      body: currentIndex == 0
+          ? Center(child: Text("HELLO"))
+          : Center(child: Text("WORLD")),
+
+      bottomNavigationBar: NavigationBar(
+        destinations: [
+          NavigationDestination(icon: Icon(Icons.home), label: "Home"),
+          NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
+        ],
+        onDestinationSelected: (int value) {
+          setState(() {
+            currentIndex = value;
+          });
+        },
+        selectedIndex: currentIndex,
       ),
     );
   }
